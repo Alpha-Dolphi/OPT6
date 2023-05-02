@@ -116,7 +116,7 @@ export default {
       const draggableItemBelow = elemBelow?.closest('.draggable-item')
       const sideMenu = elemBelow?.closest('.side-menu')
       if (!sideMenu) {
-        return;
+        return
       }
 
       if (!draggableItemBelow) {

@@ -21,13 +21,14 @@
         />
       </template> -->
     </div>
-    <AppTable @save-changes="handleSaveChangesToLocalStorage" :table-heads="tableHeads"/>
+    <AppTable
+      @save-changes="handleSaveChangesToLocalStorage"
+      :table-heads="tableHeads"
+    />
   </div>
 </template>
 
 <script>
-
-
 import AppTable from './AppTable.vue'
 import AppTableOptions from './AppTableOptions.vue'
 import tableHeads from './data/table/tableHeaders'
@@ -52,7 +53,7 @@ export default {
       this.tableHeaders = newHeaders
       this.tableHeads = newHeaders
     },
-}
+  },
 }
 </script>
 
@@ -73,7 +74,7 @@ export default {
   display: flex;
   gap: 20px;
   color: var(--black);
-  font-family: "MyriadPro semibold";
+  font-family: 'MyriadPro semibold';
 }
 
 .blue {

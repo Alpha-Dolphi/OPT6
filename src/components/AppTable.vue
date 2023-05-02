@@ -98,31 +98,38 @@
           :class="{ 'add-border': getCellKey(row, key) === 'unit_name' }"
           class="input-value"
           v-model="tableContent[index][getCellKey(row, key)]"
-          />
-          <!-- :type="this.initTableHaders[key].inputType" -->
+        />
+        <!-- :type="this.initTableHaders[key].inputType" -->
         <div v-if="getCellKey(row, key) === 'index'" class="item-index">
           {{ index + 1 }}
         </div>
         <div v-if="getCellKey(row, key) === 'total'" class="input-value">
-          {{ !(row.price * row.amount) ? row.total : row.price * row.amount}}
+          {{ !(row.price * row.amount) ? row.total : row.price * row.amount }}
         </div>
-
       </div>
     </div>
 
     <div class="total-results">
       <div class="total-results__inner-wrapper">
-      <div class="total-stats">
-        <div><span class="total-stats__name">Сумма:</span><span class="total-stats__value"> 152 212 руб</span></div>
-        <div><span class="total-stats__name">Кол-во:</span><span class="total-stats__value"> 24 шт</span></div>
-        <div><span class="total-stats__name">Общий вес</span><span class="total-stats__value"> 2 322 кг</span></div>
-      </div>
-      <div class="total-sum">
-        <span>Общая сумма:</span><span>152 212 руб</span>
+        <div class="total-stats">
+          <div>
+            <span class="total-stats__name">Сумма:</span
+            ><span class="total-stats__value"> 152 212 руб</span>
+          </div>
+          <div>
+            <span class="total-stats__name">Кол-во:</span
+            ><span class="total-stats__value"> 24 шт</span>
+          </div>
+          <div>
+            <span class="total-stats__name">Общий вес</span
+            ><span class="total-stats__value"> 2 322 кг</span>
+          </div>
+        </div>
+        <div class="total-sum">
+          <span>Общая сумма:</span><span>152 212 руб</span>
+        </div>
       </div>
     </div>
-    </div>
-
   </div>
 </template>
 
@@ -174,13 +181,12 @@ export default {
     AppTableOptions,
   },
   mounted() {
-    console.log("TABLE RERENDER");
+    console.log('TABLE RERENDER')
     this.setInitialHeaderWidths()
     this.getDataFromLocalStorage()
   },
   methods: {
     dragStart(event, key, row, index) {
-
       const target = event.target.closest('.grab-icon')
       if (!target) {
         event.preventDefault()
@@ -190,22 +196,22 @@ export default {
       const draggableItem = target.closest('.draggable-item')
       const boundingRect = draggableItem.getBoundingClientRect()
       this.offsetX = event.clientX - boundingRect.left
-this.offsetY = event.clientY - boundingRect.top
+      this.offsetY = event.clientY - boundingRect.top
 
-const draggingElement = this.$refs.draggingItem;
-draggingElement.innerHTML = draggableItem.innerHTML;
+      const draggingElement = this.$refs.draggingItem
+      draggingElement.innerHTML = draggableItem.innerHTML
 
-const inputs = draggableItem.querySelectorAll('.input-value');
-const inputsOfDragging = draggingElement.querySelectorAll('.input-value');
-inputsOfDragging.forEach((input, index) => {
-  input.setAttribute('value', inputs[index].value)
-});
+      const inputs = draggableItem.querySelectorAll('.input-value')
+      const inputsOfDragging = draggingElement.querySelectorAll('.input-value')
+      inputsOfDragging.forEach((input, index) => {
+        input.setAttribute('value', inputs[index].value)
+      })
 
-draggingElement.style.left = event.clientX - this.offsetX + 'px'
-draggingElement.style.top = event.clientY - this.offsetY + window.scrollY + 'px';
+      draggingElement.style.left = event.clientX - this.offsetX + 'px'
+      draggingElement.style.top =
+        event.clientY - this.offsetY + window.scrollY + 'px'
 
-
-      draggingElement.style["z-index"] = 1000;
+      draggingElement.style['z-index'] = 1000
       const id = +draggableItem.getAttribute('data-id')
 
       this.dragIndex = index
@@ -218,12 +224,12 @@ draggingElement.style.top = event.clientY - this.offsetY + window.scrollY + 'px'
       event.preventDefault()
       this.moveDraggingAt(event)
 
-      this.$refs.draggingItem.style.visibility =  "hidden";
+      this.$refs.draggingItem.style.visibility = 'hidden'
       let elemBelow = document.elementFromPoint(event.clientX, event.clientY)
-      this.$refs.draggingItem.style.visibility =  "visible";
+      this.$refs.draggingItem.style.visibility = 'visible'
 
       const draggableItemBelow = elemBelow?.closest('.draggable-item')
-      const tableBelow = elemBelow.closest('.table');
+      const tableBelow = elemBelow.closest('.table')
 
       if (!draggableItemBelow || !tableBelow) {
         return
@@ -234,8 +240,8 @@ draggingElement.style.top = event.clientY - this.offsetY + window.scrollY + 'px'
 
       if (index === this.dragIndex) {
         draggableItemBelow.classList.add('below-dragging')
-        this.innerHTML = draggableItemBelow.innerHTML;
-        this.showdraggableBelowContent = false;
+        this.innerHTML = draggableItemBelow.innerHTML
+        this.showdraggableBelowContent = false
         this.prevDraggableItem = draggableItemBelow
         return
       }
@@ -243,13 +249,14 @@ draggingElement.style.top = event.clientY - this.offsetY + window.scrollY + 'px'
       this.prevDraggableItem.classList.remove('below-dragging')
       const draggedItem = this.tableContent.splice(this.dragIndex, 1)[0]
       this.tableContent.splice(index, 0, draggedItem)
-      this.$refs.draggingItem.querySelector('.item-index').innerHTML = index + 1;
+      this.$refs.draggingItem.querySelector('.item-index').innerHTML = index + 1
       this.dragIndex = index
       this.prevId = id
     },
     moveDraggingAt(event) {
       this.$refs.draggingItem.style.left = event.clientX - this.offsetX + 'px'
-      this.$refs.draggingItem.style.top = event.clientY - this.offsetY + window.scrollY + 'px'
+      this.$refs.draggingItem.style.top =
+        event.clientY - this.offsetY + window.scrollY + 'px'
     },
     handlePointerUp() {
       this.$refs.draggingItem.innerHTML = null
@@ -258,7 +265,6 @@ draggingElement.style.top = event.clientY - this.offsetY + window.scrollY + 'px'
       document.removeEventListener('pointerup', this.handlePointerUp)
     },
     getDataFromLocalStorage() {
-
       const headers = localStorage.getItem('tableHeaders')
       const headerWidths = localStorage.getItem('headerWidths')
       if (headers) {
@@ -271,7 +277,6 @@ draggingElement.style.top = event.clientY - this.offsetY + window.scrollY + 'px'
       }
     },
     handleSaveChangesToLocalStorage() {
-
       localStorage.setItem('tableHeaders', JSON.stringify(this.tableHeaders))
       localStorage.setItem('headerWidths', JSON.stringify(this.headerWidths))
       this.showSaveChanges = false
@@ -289,20 +294,22 @@ draggingElement.style.top = event.clientY - this.offsetY + window.scrollY + 'px'
       const x = event.clientX
       const isOnRightBorder = x >= headerCellRight - 5 && x <= headerCellRight
 
-      this.index = +target.getAttribute('data-index');
-      this.bodyCells = document.querySelectorAll('.table-body__cell:nth-child(' + (this.index + 1) + ')');
+      this.index = +target.getAttribute('data-index')
+      this.bodyCells = document.querySelectorAll(
+        '.table-body__cell:nth-child(' + (this.index + 1) + ')',
+      )
 
       if (isOnRightBorder) {
         target.classList.add('hover-right-border')
 
-        this.bodyCells.forEach(cell => {
-            cell.classList.add('hover-right-border')
+        this.bodyCells.forEach((cell) => {
+          cell.classList.add('hover-right-border')
         })
         this.lastHoveredCell = target
 
         return true
       } else {
-        this.bodyCells.forEach(cell => {
+        this.bodyCells.forEach((cell) => {
           cell.classList.remove('hover-right-border')
         })
         target.classList.remove('hover-right-border')
@@ -313,16 +320,20 @@ draggingElement.style.top = event.clientY - this.offsetY + window.scrollY + 'px'
       this.checkIfMouseOverBorder(event)
     },
     handleHeaderMouseOut() {
-      if (this.lastHoveredCell && this.bodyCells.length && !this.draggingTableHeaderCell) {
+      if (
+        this.lastHoveredCell &&
+        this.bodyCells.length &&
+        !this.draggingTableHeaderCell
+      ) {
         this.hideBorderRightOutline()
       }
     },
     hideBorderRightOutline() {
       this.lastHoveredCell.classList.remove('hover-right-border')
-        this.bodyCells.forEach(cell => {
-          cell.classList.remove('hover-right-border')
-        })
-      this.bodyCells = null;
+      this.bodyCells.forEach((cell) => {
+        cell.classList.remove('hover-right-border')
+      })
+      this.bodyCells = null
       this.lastHoveredCell = null
     },
     handleHeaderCellMouseDown(event, index) {
@@ -330,7 +341,7 @@ draggingElement.style.top = event.clientY - this.offsetY + window.scrollY + 'px'
       if (!target) {
         return
       }
-      document.querySelector('body').classList.add('cursor-col-resize');
+      document.querySelector('body').classList.add('cursor-col-resize')
 
       this.draggingTableHeaderCell = target
 
@@ -355,9 +366,9 @@ draggingElement.style.top = event.clientY - this.offsetY + window.scrollY + 'px'
     },
     handleMouseUp() {
       this.showSaveChanges = true
-      this.draggingTableHeaderCell = null;
+      this.draggingTableHeaderCell = null
       document.querySelector('body').classList.remove('changing-width')
-      document.querySelector('body').classList.remove('cursor-col-resize');
+      document.querySelector('body').classList.remove('cursor-col-resize')
       this.hideBorderRightOutline()
       document.removeEventListener('mousemove', this.handleColumnResize)
       document.removeEventListener('mouseup', this.handleMouseUp)
@@ -368,16 +379,16 @@ draggingElement.style.top = event.clientY - this.offsetY + window.scrollY + 'px'
     },
     addItemToTable() {
       this.tableContent.push({
-    index: this.tableContent.length,
-    action: "",
-    unit_name: "",
-    price: 0,
-    amount: 0,
-    product_name: "",
-    total: 0,
-    id: Math.floor(Math.random() * 100000) + 1,
+        index: this.tableContent.length,
+        action: '',
+        unit_name: '',
+        price: 0,
+        amount: 0,
+        product_name: '',
+        total: 0,
+        id: Math.floor(Math.random() * 100000) + 1,
       })
-    }
+    },
   },
   computed: {
     filteredHeaders() {
@@ -385,8 +396,8 @@ draggingElement.style.top = event.clientY - this.offsetY + window.scrollY + 'px'
       return tableHeaders.filter((header) => header.showTitle)
     },
     filteredTableContent() {
-      console.log(this.tableHeaders[0]);
-      const tableHeaders = this.tableHeaders;
+      console.log(this.tableHeaders[0])
+      const tableHeaders = this.tableHeaders
       return this.tableContent.map(({ id, ...rest }) => {
         id
         const showedColumns = Object.keys(rest).filter(
@@ -400,13 +411,13 @@ draggingElement.style.top = event.clientY - this.offsetY + window.scrollY + 'px'
       })
     },
   },
-//   watch: {
-//   tableHeads(newValue, oldValue) {
-//     if (JSON.stringify(newValue) !== JSON.stringify(oldValue)) {
-//       this.getDataFromLocalStorage();
-//     }
-//   },
-// },
+  //   watch: {
+  //   tableHeads(newValue, oldValue) {
+  //     if (JSON.stringify(newValue) !== JSON.stringify(oldValue)) {
+  //       this.getDataFromLocalStorage();
+  //     }
+  //   },
+  // },
 }
 </script>
 
@@ -445,7 +456,7 @@ draggingElement.style.top = event.clientY - this.offsetY + window.scrollY + 'px'
   outline-offset: -3px;
   background-color: #fbfcfd;
   position: absolute;
-  content: "";
+  content: '';
   /* background: red; */
   width: 100%;
   height: 100%;
@@ -454,7 +465,6 @@ draggingElement.style.top = event.clientY - this.offsetY + window.scrollY + 'px'
 .grab-icon {
   cursor: grab;
 }
-
 
 .table-header__cell:last-child {
   border-right: none;
@@ -649,7 +659,4 @@ draggingElement.style.top = event.clientY - this.offsetY + window.scrollY + 'px'
   color: var(--light-navy);
   /* margin-bottom: -1px; */
 }
-
 </style>
-
-
