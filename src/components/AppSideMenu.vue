@@ -114,6 +114,10 @@ export default {
       this.$refs.draggingItem.hidden = false
 
       const draggableItemBelow = elemBelow?.closest('.draggable-item')
+      const sideMenu = elemBelow?.closest('.side-menu')
+      if (!sideMenu) {
+        return;
+      }
 
       if (!draggableItemBelow) {
         this.prevDraggableItem.classList.remove('below-dragging')

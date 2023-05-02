@@ -7,13 +7,13 @@
       <span>Отображение столбцов</span>
       <img :src="arrowIcon" alt="arrow icon" class="arrow-icon" />
     </li>
-    <li
+    <!-- <li
       v-if="!showColumns"
       :class="showColumns ? 'swap-places' : 'hover-effect'"
     >
       <span>Порядок столбцов</span>
       <img :src="arrowIcon" alt="arrow icon" class="arrow-icon" />
-    </li>
+    </li> -->
     <ul class="display-columns" v-if="showColumns">
       <li v-for="column in tableHeaders" :key="column.id">
         <label class="display-columns__content">
@@ -42,13 +42,10 @@ export default {
       showColumns: false,
     }
   },
-  mounted() {
-    console.log(this.tableHeaders)
-  },
   watch: {
     tableHeaders: {
-      handler() {
-        this.$emit('headers-updated')
+      handler(newHeaders) {
+        this.$emit('headers-updated', newHeaders)
       },
       deep: true,
     },
@@ -61,13 +58,11 @@ export default {
   position: absolute;
   right: 15px;
   top: 28px;
-  /* width: 100px; */
   height: 20px;
   height: max-content;
   border-radius: 5px;
   box-shadow: 0 0 3px 0 var(--black), inset 0 1px 2px 0 var(--white-50);
   background-color: var(--white);
-  /* cursor: pointer; */
 }
 
 .table-options > li {

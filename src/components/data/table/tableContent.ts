@@ -13,7 +13,7 @@ export enum Actions {
 export interface Product {
   index: number,
   action: Actions;
-  unit_name: ProductName;
+  unit_name: string;
   price: number;
   amount: number;
   product_name: string;
@@ -28,7 +28,7 @@ const products: Product[] = [
     unit_name: ProductName['Мраморный щебень фр. 2-5 мм, 25кг'],
     price: 234,
     amount: 34,
-    product_name: 'вав',
+    product_name: 'Первый',
     total: 234*34,
     id: Math.floor(Math.random() * 100000) + 1,
   },
@@ -38,7 +38,7 @@ const products: Product[] = [
     unit_name: ProductName['Мраморный щебень фр. 2-5 мм, 25кг (вайт)'],
     price: 234,
     amount: 34,
-    product_name: '',
+    product_name: 'Второй',
     total: 234*34,
     id: Math.floor(Math.random() * 100000) + 1,
   },
@@ -48,7 +48,7 @@ const products: Product[] = [
     unit_name: ProductName['Мраморный щебень фр. 2-5 мм, 25кг'],
     price: 234,
     amount: 34,
-    product_name: '',
+    product_name: 'Третий',
     total: 234*34,
     id: Math.floor(Math.random() * 100000) + 1,
   },
@@ -58,7 +58,7 @@ const products: Product[] = [
     unit_name: ProductName['Мраморный щебень фр. 2-5 мм, 25кг'],
     price: 199,
     amount: 21,
-    product_name: '',
+    product_name: 'Четвёртый',
     total: 199*21,
     id: Math.floor(Math.random() * 100000) + 1,
   },
@@ -68,7 +68,7 @@ const products: Product[] = [
     unit_name: ProductName['Мраморный щебень фр. 2-5 мм, 25кг'],
     price: 234,
     amount: 34,
-    product_name: '',
+    product_name: 'Пятый',
     total: 234*34,
     id: Math.floor(Math.random() * 100000) + 1,
   },
